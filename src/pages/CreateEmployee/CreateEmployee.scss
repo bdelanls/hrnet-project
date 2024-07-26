@@ -1,0 +1,85 @@
+@import "../../styles/_utils.scss";
+
+/***** Form *****/
+
+.form-col {
+  width: 43%;
+
+  @include mobile {
+    width: 100%;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 25px;
+
+  @include mobile {
+    margin: 0 30px 25px 30px;
+  }
+
+  label {
+    margin-bottom: 8px;
+  }
+
+  input,
+  select {
+    font-family: $font-stack;
+    font-size: rem(16);
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    outline: none;
+    padding: 5px;
+    background-color: #fff;
+  }
+
+  button {
+    margin-top: 20px;
+    width: max-content;
+    outline: none;
+    border: none;
+    background-color: $color-primary;
+    font-size: rem(16);
+    text-transform: uppercase;
+    color: #fff;
+
+    @include mobile {
+      padding: 10px 80px;
+      margin: 20px auto 0 auto;
+    }
+
+    &:hover {
+      background-color: $color-secondary;
+      color: #fff;
+      cursor: pointer;
+    }
+  }
+}
+
+.form-address {
+  border: 1px solid #c4c4c4;
+  border-radius: 10px;
+  padding: 20px;
+  width: 50%;
+  margin-top: -36px;
+
+  @include mobile {
+    width: 100%;
+    margin: 0 20px 20px 20px;
+    padding: 20px 10px;
+
+    .form-group {
+      margin: 0 0 25px 0;
+    }
+  }
+
+  legend {
+    color: #666;
+    padding: 0 5px;
+  }
+
+  .form-group:last-child {
+    margin: 0;
+  }
+}
