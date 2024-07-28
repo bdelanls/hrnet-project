@@ -14,6 +14,7 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 25px;
+  position: relative;
 
   @include mobile {
     margin: 0 30px 25px 30px;
@@ -54,6 +55,14 @@
       color: #fff;
       cursor: pointer;
     }
+  }
+
+  .error {
+    position: absolute;
+    right: 0;
+    bottom: -17px;
+    font-size: rem(14);
+    color: #ff0000;
   }
 }
 

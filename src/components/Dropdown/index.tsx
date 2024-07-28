@@ -16,7 +16,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   onChange,
 }) => {
   return (
-    <div className="form-group">
+    <>
       <label htmlFor={id}>{label}</label>
       <select id={id} value={value} onChange={onChange}>
         <option value="" disabled>
@@ -28,7 +28,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           </option>
         ))}
       </select>
-    </div>
+    </>
   );
 };
 
