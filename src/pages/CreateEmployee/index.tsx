@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Dropdown from '../../components/Dropdown';
 import DatePicker from '../../components/DatePicker';
+import useStore from '../../store';
 import states from '../../data/states.json';
 import departments from '../../data/departments.json';
 import './CreateEmployee.scss';
 
 const CreateEmployee: React.FC = () => {
+  const addEmployee = useStore((state) => state.addEmployee);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [dateOfBirth, setDateOfBirth] = useState('');
@@ -81,11 +83,31 @@ const CreateEmployee: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (validate()) {
-      // Enregistrer les données si le formulaire est valide
-      console.log('Form is valid. Submitting data...');
-      // Ajouter la logique pour enregistrer les données
+      const newEmployee = {
+        id: Date.now(),
+        firstName,
+        lastName,
+        dateOfBirth,
+        startDate,
+        street,
+        city,
+        state,
+        zipCode,
+        department,
+      };
+      addEmployee(newEmployee);
+      // Réinitialiser le formulaire
+      setFirstName('');
+      setLastName('');
+      setDateOfBirth('');
+      setStartDate('');
+      setStreet('');
+      setCity('');
+      setState('');
+      setZipCode('');
+      setDepartment('');
     } else {
-      console.log('Form is invalid. Fix errors before submitting.');
+      console.log('Form is invalid.');
     }
   };
 
