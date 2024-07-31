@@ -1,0 +1,52 @@
+@import '../../styles/_utils.scss';
+
+/***** PAGINATION *****/
+
+
+.table-pagination {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  
+    @include mobile {
+      flex-direction: column-reverse;
+      gap: 10px;
+    }
+  
+    &--info {
+      @include mobile {
+        font-size: 14px;
+      }
+    }
+  
+    &--list {
+      display: flex;
+      list-style: none;
+      padding: 0;
+  
+      li {
+        margin: 0 5px;
+
+        button {
+            border: none;
+            font-family: $font-stack;
+            font-size: rem(16);
+            background-color: inherit;
+            color: $color-secondary;
+            cursor: pointer;
+
+            &[disabled] {
+                opacity: 30%;
+            }
+
+            &.active {
+                font-weight: 600;
+                color: $color-primary;
+            }
+        }
+  
+        
+      }
+    }
+  }

@@ -1,0 +1,21 @@
+@import '../../styles/_utils.scss';
+
+/***** SEARCHBAR *****/
+
+// => EmployeeList.scss
+
+.clear-button {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: $color-primary;
+
+    &:hover {
+        color: #F00;
+    }
+}

@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "node",
     "jsx": "react",
     "checkJs": true,
     "declaration": true,

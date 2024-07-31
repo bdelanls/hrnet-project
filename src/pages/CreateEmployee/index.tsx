@@ -198,6 +198,7 @@ const CreateEmployee: React.FC = () => {
               options={stateOptions}
               value={state}
               onChange={(e) => setState(e.target.value)}
+              firstOption={{ value: '', label: 'Your choice' }}
             />
             {errors.state && <p className="error">{errors.state}</p>}
           </div>
@@ -223,6 +224,7 @@ const CreateEmployee: React.FC = () => {
               options={departmentOptions}
               value={department}
               onChange={(e) => setDepartment(e.target.value)}
+              firstOption={{ value: '', label: 'Your choice' }}
             />
             {errors.department && <p className="error">{errors.department}</p>}
           </div>

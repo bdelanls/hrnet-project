@@ -6,6 +6,7 @@ interface DropdownProps {
   options: Array<{ value: string; label: string }>;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  firstOption?: { value: string; label: string };
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
@@ -14,14 +15,17 @@ const Dropdown: React.FC<DropdownProps> = ({
   options,
   value,
   onChange,
+  firstOption,
 }) => {
   return (
     <>
       <label htmlFor={id}>{label}</label>
       <select id={id} value={value} onChange={onChange}>
-        <option value="" disabled>
-          Your choice
-        </option>
+        {firstOption && (
+          <option value={firstOption.value} disabled={firstOption.value === ''}>
+            {firstOption.label}
+          </option>
+        )}
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

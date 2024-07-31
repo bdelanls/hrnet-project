@@ -1,18 +1,54 @@
-/* montserrat-regular - latin */
+// /* montserrat-regular - latin */
+// @font-face {
+//     font-display: swap; 
+//     font-family: 'Montserrat';
+//     font-style: normal;
+//     font-weight: 400;
+//     src: url('../assets/fonts/montserrat-v26-latin-regular.woff2') format('woff2'); 
+//   }
+  
+//   /* montserrat-600 - latin */
+//   @font-face {
+//     font-display: swap; 
+//     font-family: 'Montserrat';
+//     font-style: normal;
+//     font-weight: 600;
+//     src: url('../assets/fonts/montserrat-v26-latin-600.woff2') format('woff2'); 
+//   }
+  
+
+  /* barlow-regular - latin */
 @font-face {
-    font-display: swap; 
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../assets/fonts/montserrat-v26-latin-regular.woff2') format('woff2'); 
-  }
-  
-  /* montserrat-600 - latin */
-  @font-face {
-    font-display: swap; 
-    font-family: 'Montserrat';
-    font-style: normal;
-    font-weight: 600;
-    src: url('../assets/fonts/montserrat-v26-latin-600.woff2') format('woff2'); 
-  }
-  
+  font-display: swap; 
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/barlow-v12-latin-regular.woff2') format('woff2'); 
+}
+
+/* barlow-600 - latin */
+@font-face {
+  font-display: swap; 
+  font-family: 'Barlow';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../assets/fonts/barlow-v12-latin-600.woff2') format('woff2'); 
+}
+
+/* barlow-condensed-regular - latin */
+@font-face {
+  font-display: swap; 
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../assets/fonts/barlow-condensed-v12-latin-regular.woff2') format('woff2'); 
+}
+
+/* barlow-condensed-600 - latin */
+@font-face {
+  font-display: swap; 
+  font-family: 'Barlow Condensed';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../assets/fonts/barlow-condensed-v12-latin-600.woff2') format('woff2'); 
+}
