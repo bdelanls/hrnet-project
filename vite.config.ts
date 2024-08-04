@@ -13,6 +13,6 @@ export default defineConfig({
     open: true,
   },
   build: {
-    sourcemap: true,
+    sourcemap: false,
   },
 });

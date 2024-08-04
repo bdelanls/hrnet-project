@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import Logo from '../../assets/hrnet.png';
+import LogoPng from '../../assets/hrnet.png';
+import LogoAvif from '../../assets/hrnet.avif';
 
 const Header: React.FC = () => {
   const location = useLocation();
@@ -11,7 +12,15 @@ const Header: React.FC = () => {
     <header className="header" role="banner">
       <div className="header-content">
         <Link to="/">
-          <img src={Logo} width="216" height="62" alt="HRnet Wealth Health" />
+          <picture>
+            <source srcSet={LogoAvif} type="image/avif" />
+            <img
+              src={LogoPng}
+              width="216"
+              height="62"
+              alt="HRnet Wealth Health"
+            />
+          </picture>
         </Link>
         {isCreateEmployeePage ? (
           <Link

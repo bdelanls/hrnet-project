@@ -51,16 +51,24 @@ const EmployeeList: React.FC = () => {
       <div className="employees-content">
         <section className="table-controls">
           <div className="table-controls--show">
+            <label htmlFor="entries">Show</label>
             <Dropdown
-              label="Show"
+              label="Number of entries to show"
               id="entries"
               options={entriesOptions}
               value={entriesPerPage}
               onChange={handleEntriesChange}
+              aria-labelledby="entries-label"
             />
-            <label htmlFor="entries">entries</label>
+            <label id="entries-label" htmlFor="entries">
+              entries
+            </label>
           </div>
-          <SearchBar onSearch={handleSearch} minCharacters={1} />
+          <SearchBar
+            onSearch={handleSearch}
+            minCharacters={1}
+            aria-label="Search in employee table"
+          />
         </section>
         <DataTable
           employees={filteredEmployees}
