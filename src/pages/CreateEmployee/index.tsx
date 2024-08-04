@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Dropdown from '../../components/Dropdown';
 import DatePicker from '../../components/DatePicker';
-import useStore from '../../store';
+import useStore, { Employee } from '../../store';
 import states from '../../data/states.json';
 import departments from '../../data/departments.json';
+import Modal from '../../components/Modal';
 import './CreateEmployee.scss';
 
 const CreateEmployee: React.FC = () => {
@@ -19,6 +21,10 @@ const CreateEmployee: React.FC = () => {
   const [department, setDepartment] = useState('');
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newEmployee, setNewEmployee] = useState<Employee | null>(null);
+
+  const navigate = useNavigate();
 
   const stateOptions = states.map((state) => ({
     value: state.abbreviation,
@@ -83,7 +89,7 @@ const CreateEmployee: React.FC = () => {
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (validate()) {
-      const newEmployee = {
+      const newEmployeeData: Employee = {
         id: Date.now(),
         firstName,
         lastName,
@@ -95,7 +101,10 @@ const CreateEmployee: React.FC = () => {
         zipCode,
         department,
       };
-      addEmployee(newEmployee);
+      addEmployee(newEmployeeData);
+      setNewEmployee(newEmployeeData);
+      //setIsModalOpen(true);
+
       // Réinitialiser le formulaire
       setFirstName('');
       setLastName('');
@@ -110,6 +119,16 @@ const CreateEmployee: React.FC = () => {
       console.log('Form is invalid.');
     }
   };
+
+  // Référence pour le premier bouton dans la modale
+  const firstButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Donner le focus au premier bouton lorsque la modale est ouverte
+  useEffect(() => {
+    if (isModalOpen && firstButtonRef.current) {
+      firstButtonRef.current.focus();
+    }
+  }, [isModalOpen]);
 
   return (
     <main className="main create">
@@ -235,6 +254,44 @@ const CreateEmployee: React.FC = () => {
           </div>
         </div>
       </form>
+
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title="Employee Created"
+        size="medium"
+        backdropOpacity={0.5}
+        showCloseButton={true}
+      >
+        <div id="employee-created-description">
+          {newEmployee && (
+            <>
+              <p>{`${newEmployee.firstName} ${newEmployee.lastName} has been successfully created.`}</p>
+              <div className="modal-buttons">
+                <button
+                  ref={firstButtonRef}
+                  className="btn btn-primary"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    navigate('/create-employee');
+                  }}
+                >
+                  Create another employee
+                </button>
+                <button
+                  className="btn btn-secondary"
+                  onClick={() => {
+                    setIsModalOpen(false);
+                    navigate('/current-employees');
+                  }}
+                >
+                  View current employees
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+      </Modal>
     </main>
   );
 };

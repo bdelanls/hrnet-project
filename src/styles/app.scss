@@ -18,14 +18,20 @@
       flex-direction: column;
     }
   }
+
+  .btn {
+    background-color: #fff;
+    color: $color-primary;
+  }
 }
 
 .btn {
-  background-color: #fff;
+  background-color: $color-primary;
   display: inline-block;
   padding: 10px 15px;
+  border: none;
   border-radius: 5px;
-  color: $color-primary;
+  color: #fff;
   height: max-content;
   text-decoration: none;
   transition: all 0.3s;
@@ -37,6 +43,7 @@
   &:hover {
     background-color: $color-secondary;
     color: #fff;
+    cursor: pointer;
   }
 }
 

@@ -9,19 +9,33 @@ const EmployeeList: React.FC = () => {
   const employees = useStore((state) => state.employees);
   const [entriesPerPage, setEntriesPerPage] = useState<string>('10');
   const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setEntriesPerPage(event.target.value);
+    setCurrentPage(1);
   };
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
+    setCurrentPage(1);
   };
 
   const filteredEmployees = employees.filter((employee) =>
-    Object.values(employee).some((value) =>
-      value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    )
+    Object.entries(employee).some(([key, value]) => {
+      let searchValue = value.toString().toLowerCase();
+      let searchTermLower = searchTerm.toLowerCase();
+
+      // Formater la date dans le format affiché
+      if (key === 'startDate' || key === 'dateOfBirth') {
+        // Obtenir le format de la langue du navigateur
+        const userLang = navigator.language || 'en-US';
+        searchValue = new Date(value as string).toLocaleDateString(userLang);
+        searchTermLower = searchTerm.toLowerCase(); // Conserver la casse et la comparaison en minuscules
+      }
+
+      return searchValue.includes(searchTermLower);
+    })
   );
 
   const entriesOptions = [
@@ -51,6 +65,8 @@ const EmployeeList: React.FC = () => {
         <DataTable
           employees={filteredEmployees}
           entriesPerPage={parseInt(entriesPerPage)}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </main>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Employee } from '../../store';
 import { formatDate } from '../../utils/dateFormatters';
 import Pagination from '../Pagination';
@@ -8,9 +8,16 @@ import './DataTable.scss';
 interface DataTableProps {
   employees: Employee[];
   entriesPerPage: number;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const DataTable: React.FC<DataTableProps> = ({ employees, entriesPerPage }) => {
+const DataTable: React.FC<DataTableProps> = ({
+  employees,
+  entriesPerPage,
+  currentPage,
+  setCurrentPage,
+}) => {
   const [sortConfig, setSortConfig] = useState<{
     key: keyof Employee;
     direction: 'asc' | 'desc';
@@ -20,20 +27,37 @@ const DataTable: React.FC<DataTableProps> = ({ employees, entriesPerPage }) => {
   });
 
   const sortedEmployees = [...employees].sort((a, b) => {
-    const aValue = a[sortConfig.key].toString().toLowerCase();
-    const bValue = b[sortConfig.key].toString().toLowerCase();
+    let aValue: string | number = a[sortConfig.key];
+    let bValue: string | number = b[sortConfig.key];
 
-    if (aValue < bValue) {
-      return sortConfig.direction === 'asc' ? -1 : 1;
+    if (sortConfig.key === 'startDate' || sortConfig.key === 'dateOfBirth') {
+      // Convertir les valeurs en objets Date pour les dates
+      const dateA = new Date(aValue as string);
+      const dateB = new Date(bValue as string);
+
+      if (dateA < dateB) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (dateA > dateB) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
+      return 0;
+    } else {
+      // Sinon, comparer les valeurs comme des chaînes de caractères ou des nombres
+      aValue = aValue.toString().toLowerCase();
+      bValue = bValue.toString().toLowerCase();
+
+      if (aValue < bValue) {
+        return sortConfig.direction === 'asc' ? -1 : 1;
+      }
+      if (aValue > bValue) {
+        return sortConfig.direction === 'asc' ? 1 : -1;
+      }
+      return 0;
     }
-    if (aValue > bValue) {
-      return sortConfig.direction === 'asc' ? 1 : -1;
-    }
-    return 0;
   });
 
   // Pagination logic
-  const [currentPage, setCurrentPage] = useState(1);
   const totalEmployees = sortedEmployees.length;
   const indexOfLastEmployee = currentPage * entriesPerPage;
   const indexOfFirstEmployee = indexOfLastEmployee - entriesPerPage;
@@ -41,6 +65,11 @@ const DataTable: React.FC<DataTableProps> = ({ employees, entriesPerPage }) => {
     indexOfFirstEmployee,
     indexOfLastEmployee
   );
+
+  // Effect hook to reset currentPage when entriesPerPage changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [entriesPerPage, setCurrentPage]);
 
   const handleSort = (key: keyof Employee) => {
     let direction: 'asc' | 'desc' = 'asc';
