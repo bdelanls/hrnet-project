@@ -5,33 +5,56 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import './EmployeeList.scss';
 
+/**
+ * EmployeeList component displays the current list of employees with features like pagination,
+ * search functionality and the ability to change the number of entries shown per page.
+ *
+ * @returns {React.ReactElement} The rendered EmployeeList component.
+ */
 const EmployeeList: React.FC = () => {
   const employees = useStore((state) => state.employees);
   const [entriesPerPage, setEntriesPerPage] = useState<string>('10');
   const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
+  /**
+   * Handles the change in the number of entries per page
+   * and resets the pagination to the first page.
+   *
+   * @param {React.ChangeEvent<HTMLSelectElement>} event - The change event triggered when the dropdown value changes.
+   */
   const handleEntriesChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setEntriesPerPage(event.target.value);
     setCurrentPage(1);
   };
 
+  /**
+   * Handles the search input by the user
+   * and resets the pagination to the first page.
+   *
+   * @param {string} term - The search term entered by the user.
+   */
   const handleSearch = (term: string) => {
     setSearchTerm(term);
     setCurrentPage(1);
   };
 
+  /**
+   * Filters the employees list based on the search term.
+   * It also formats the date fields (startDate, dateOfBirth) according to the user's locale.
+   *
+   * @returns {Employee[]} The filtered list of employees.
+   */
   const filteredEmployees = employees.filter((employee) =>
     Object.entries(employee).some(([key, value]) => {
       let searchValue = value.toString().toLowerCase();
       let searchTermLower = searchTerm.toLowerCase();
 
-      // Formater la date dans le format affiché
+      // Format date fields to match the user's locale
       if (key === 'startDate' || key === 'dateOfBirth') {
-        // Obtenir le format de la langue du navigateur
         const userLang = navigator.language || 'en-US';
         searchValue = new Date(value as string).toLocaleDateString(userLang);
-        searchTermLower = searchTerm.toLowerCase(); // Conserver la casse et la comparaison en minuscules
+        searchTermLower = searchTerm.toLowerCase();
       }
 
       return searchValue.includes(searchTermLower);

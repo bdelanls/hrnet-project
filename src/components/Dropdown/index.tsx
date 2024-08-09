@@ -9,6 +9,16 @@ interface DropdownProps {
   firstOption?: { value: string; label: string };
 }
 
+/**
+ * Dropdown component renders a labeled select input with optional first choice.
+ *
+ * @param {string} label - The label for the dropdown.
+ * @param {string} id - The unique identifier for the dropdown.
+ * @param {Array<{ value: string; label: string }>} options - The list of options for the dropdown.
+ * @param {string} value - The currently selected value of the dropdown.
+ * @param {(event: React.ChangeEvent<HTMLSelectElement>) => void} onChange - Callback function to handle selection changes.
+ * @param {{ value: string; label: string }} [firstOption] - Optional first option that appears at the top of the dropdown list, often used for placeholder text.
+ */
 const Dropdown: React.FC<DropdownProps> = ({
   label,
   id,

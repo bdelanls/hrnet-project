@@ -1,7 +1,9 @@
 import { create } from 'zustand';
 import mockEmployees from './data/mockEmployees.json'; // Importer les données générées
 
-// Interface pour l'état des employés
+/**
+ * Interface representing an employee.
+ */
 export interface Employee {
   id: number;
   firstName: string;
@@ -15,18 +17,24 @@ export interface Employee {
   department: string;
 }
 
-// Interface pour l'état global de l'application
+/**
+ * Interface representing the global state of the application.
+ */
 interface EmployeeState {
   employees: Employee[];
   addEmployee: (employee: Employee) => void;
 }
 
-// Détecter si nous devons utiliser les données de mock
+// Detect whether to use mock data
 const useMockData = import.meta.env.VITE_USE_MOCK_DATA === 'true';
 
-// Fonction pour sauvegarder l'état dans localStorage
+/**
+ * Saves the state to localStorage.
+ *
+ * @param {Employee[]} employees - The list of employees to save.
+ */
 const saveToLocalStorage = (employees: Employee[]) => {
-  if (!useMockData) return; // Ne pas utiliser localStorage si les données de mock sont désactivées
+  if (!useMockData) return; // Don't use localStorage if mock data is disabled
   try {
     const serializedState = JSON.stringify(employees);
     localStorage.setItem('zustandState', serializedState);
@@ -35,28 +43,32 @@ const saveToLocalStorage = (employees: Employee[]) => {
   }
 };
 
-// Fonction pour charger l'état depuis localStorage
+/**
+ * Loads the state from localStorage.
+ *
+ * @returns {Employee[]} The list of employees loaded from localStorage.
+ */
 const loadFromLocalStorage = (): Employee[] => {
-  if (useMockData) return mockEmployees; // Utiliser les données générées si les données de mock sont activées
+  if (useMockData) return mockEmployees; // Use generated mock data if mock data is enabled
   try {
     const serializedState = localStorage.getItem('zustandState');
     if (serializedState === null) {
-      return []; // Utiliser un tableau vide si localStorage est vide
+      return []; // Use an empty array if localStorage is empty
     }
     return JSON.parse(serializedState);
   } catch (e) {
     console.warn(e);
-    return []; // Utiliser un tableau vide en cas d'erreur
+    return [];
   }
 };
 
-// Initialisation du store avec Zustand et persistance
+// Initialize the store with Zustand and persistence
 const useStore = create<EmployeeState>((set) => ({
   employees: loadFromLocalStorage(),
   addEmployee: (employee: Employee) =>
     set((state) => {
       const newEmployees = [...state.employees, employee];
-      saveToLocalStorage(newEmployees); // Sauvegarder uniquement les employés si mock data est activé
+      saveToLocalStorage(newEmployees);
       return { employees: newEmployees, addEmployee: state.addEmployee };
     }),
 }));

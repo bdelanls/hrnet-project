@@ -6,6 +6,13 @@ import EmployeeList from './pages/EmployeeList';
 import NotFound from './pages/NotFound';
 import './styles/app.scss';
 
+/**
+ * Main application component.
+ * Sets up the routing for the application using React Router.
+ * Includes the Header and defines routes for different pages.
+ *
+ * @returns {JSX.Element} The rendered App component.
+ */
 const App: React.FC = () => {
   return (
     <Router>

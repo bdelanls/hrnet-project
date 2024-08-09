@@ -3,6 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import LogoPng from '../../assets/hrnet.png';
 import LogoAvif from '../../assets/hrnet.avif';
 
+/**
+ * Header component that displays the logo and navigation links.
+ * The navigation links change based on the current page.
+ */
 const Header: React.FC = () => {
   const location = useLocation();
   const isCreateEmployeePage =

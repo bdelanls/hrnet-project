@@ -7,10 +7,19 @@ interface SearchBarProps {
   minCharacters?: number; // Minimum de caractères avant de commencer la recherche
 }
 
+/**
+ * SearchBar component provides a text input for users to search through a list of items.
+ * It includes a clear button to reset the search term.
+ *
+ * @param {function} onSearch - Callback function triggered when the search term changes.
+ * @param {string} [placeholder='Type to search...'] - Placeholder text for the search input field.
+ * @param {number} [minCharacters=1] - Minimum number of characters required to trigger the search.
+ * @returns {React.ReactElement} The rendered SearchBar component.
+ */
 const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   placeholder = 'Type to search...',
-  minCharacters = 1, // Valeur par défaut
+  minCharacters = 1,
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -20,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
     if (value.length >= minCharacters) {
       onSearch(value);
     } else {
-      onSearch(''); // Réinitialiser la recherche si trop peu de caractères
+      onSearch('');
     }
   };
 

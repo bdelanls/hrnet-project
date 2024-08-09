@@ -12,6 +12,15 @@ interface DataTableProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
+/**
+ * DataTable component displays a paginated, sortable table of employees.
+ *
+ * @param {Employee[]} employees - The list of employees to display.
+ * @param {number} entriesPerPage - The number of entries to display per page.
+ * @param {number} currentPage - The current page number in the pagination.
+ * @param {React.Dispatch<React.SetStateAction<number>>} setCurrentPage - Function to update the current page number.
+ * @returns {React.ReactElement} The rendered DataTable component.
+ */
 const DataTable: React.FC<DataTableProps> = ({
   employees,
   entriesPerPage,
@@ -26,12 +35,17 @@ const DataTable: React.FC<DataTableProps> = ({
     direction: 'asc',
   });
 
+  /**
+   * Sorts the employees based on the current sort configuration.
+   *
+   * @returns {Employee[]} The sorted list of employees.
+   */
   const sortedEmployees = [...employees].sort((a, b) => {
     let aValue: string | number = a[sortConfig.key];
     let bValue: string | number = b[sortConfig.key];
 
     if (sortConfig.key === 'startDate' || sortConfig.key === 'dateOfBirth') {
-      // Convertir les valeurs en objets Date pour les dates
+      // Convert the values to Date objects for comparison
       const dateA = new Date(aValue as string);
       const dateB = new Date(bValue as string);
 
@@ -43,7 +57,7 @@ const DataTable: React.FC<DataTableProps> = ({
       }
       return 0;
     } else {
-      // Sinon, comparer les valeurs comme des chaînes de caractères ou des nombres
+      // Compare values as strings or numbers
       aValue = aValue.toString().toLowerCase();
       bValue = bValue.toString().toLowerCase();
 
@@ -66,11 +80,12 @@ const DataTable: React.FC<DataTableProps> = ({
     indexOfLastEmployee
   );
 
-  // Effect hook to reset currentPage when entriesPerPage changes
+  // Resets the current page to 1 whenever the entriesPerPage changes.
   useEffect(() => {
     setCurrentPage(1);
   }, [entriesPerPage, setCurrentPage]);
 
+  // Handles the sorting of the table by updating the sort configuration.
   const handleSort = (key: keyof Employee) => {
     let direction: 'asc' | 'desc' = 'asc';
     if (sortConfig.key === key && sortConfig.direction === 'asc') {

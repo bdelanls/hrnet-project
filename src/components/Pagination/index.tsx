@@ -8,6 +8,15 @@ interface PaginationProps {
   onPageChange: (page: number) => void;
 }
 
+/**
+ * Pagination component that handles navigation through a paginated list.
+ *
+ * @param {number} totalItems - The total number of items to paginate.
+ * @param {number} itemsPerPage - The number of items to display per page.
+ * @param {number} currentPage - The current page being viewed.
+ * @param {(page: number) => void} onPageChange - Function to call when the page changes.
+ * @returns {React.ReactElement} The rendered Pagination component.
+ */
 const Pagination: React.FC<PaginationProps> = ({
   totalItems,
   itemsPerPage,
@@ -16,6 +25,12 @@ const Pagination: React.FC<PaginationProps> = ({
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
+  /**
+   * Handles the page change by validating the new page number
+   * and triggering the onPageChange callback.
+   *
+   * @param {number} newPage - The new page number to navigate to.
+   */
   const handlePageChange = (newPage: number) => {
     if (newPage > 0 && newPage <= totalPages) {
       onPageChange(newPage);

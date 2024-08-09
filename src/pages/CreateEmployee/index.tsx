@@ -8,6 +8,11 @@ import departments from '../../data/departments.json';
 import Modal from '../../components/Modal';
 import './CreateEmployee.scss';
 
+/**
+ * The CreateEmployee component is a form for creating a new employee record.
+ * It includes fields for personal information, address, and department,
+ * and uses Zustand for state management.
+ */
 const CreateEmployee: React.FC = () => {
   const addEmployee = useStore((state) => state.addEmployee);
   const [firstName, setFirstName] = useState('');
@@ -36,6 +41,10 @@ const CreateEmployee: React.FC = () => {
     label: department.name,
   }));
 
+  /**
+   * Handles the change event for the date of birth input field.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+   */
   const handleDateOfBirthChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -43,6 +52,10 @@ const CreateEmployee: React.FC = () => {
     setDateOfBirth(newDateOfBirth);
   };
 
+  /**
+   * Handles the change event for the start date input field.
+   * @param {React.ChangeEvent<HTMLInputElement>} event - The change event.
+   */
   const handleStartDateChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -50,6 +63,10 @@ const CreateEmployee: React.FC = () => {
     setStartDate(newStartDate);
   };
 
+  /**
+   * Validates the form inputs and sets error messages if necessary.
+   * @returns {boolean} True if the form is valid, false otherwise.
+   */
   const validate = () => {
     const newErrors: { [key: string]: string } = {};
 
@@ -86,6 +103,10 @@ const CreateEmployee: React.FC = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  /**
+   * Handles the form submission, validates the form, and adds a new employee if valid.
+   * @param {React.FormEvent} event - The form submission event.
+   */
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     if (validate()) {
@@ -103,9 +124,9 @@ const CreateEmployee: React.FC = () => {
       };
       addEmployee(newEmployeeData);
       setNewEmployee(newEmployeeData);
-      //setIsModalOpen(true);
+      setIsModalOpen(true);
 
-      // Réinitialiser le formulaire
+      // Reset the form
       setFirstName('');
       setLastName('');
       setDateOfBirth('');
@@ -120,10 +141,10 @@ const CreateEmployee: React.FC = () => {
     }
   };
 
-  // Référence pour le premier bouton dans la modale
+  // Reference for the first button in the modal
   const firstButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Donner le focus au premier bouton lorsque la modale est ouverte
+  // Set focus to the first button when the modal is opened
   useEffect(() => {
     if (isModalOpen && firstButtonRef.current) {
       firstButtonRef.current.focus();
