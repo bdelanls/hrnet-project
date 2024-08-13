@@ -5,7 +5,7 @@ import DatePicker from '../../components/DatePicker';
 import useStore, { Employee } from '../../store';
 import states from '../../data/states.json';
 import departments from '../../data/departments.json';
-import Modal from '../../components/Modal';
+import { Modal } from 'bd-react-simple-modal';
 import './CreateEmployee.scss';
 
 /**
