@@ -86,3 +86,7 @@ npm run build
 * **vite** : Outil de build et serveur de développement.
 * **typescript** : Langage de programmation utilisé dans le projet pour un typage strict.
 * **eslint** : Utilisé pour l'analyse statique du code et l'application des règles de codage.
+
+## Voir l'application en ligne
+
+L'application est disponible en ligne à l'adresse suivante : [https://p14.oc.bdelanls.fr/](https://p14.oc.bdelanls.fr/)
