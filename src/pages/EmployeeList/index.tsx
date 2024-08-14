@@ -74,9 +74,8 @@ const EmployeeList: React.FC = () => {
       <div className="employees-content">
         <section className="table-controls">
           <div className="table-controls--show">
-            <label htmlFor="entries">Show</label>
             <Dropdown
-              label="Number of entries to show"
+              label="Show"
               id="entries"
               options={entriesOptions}
               value={entriesPerPage}
