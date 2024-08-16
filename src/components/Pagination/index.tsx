@@ -37,6 +37,66 @@ const Pagination: React.FC<PaginationProps> = ({
     }
   };
 
+  /**
+   * Generates an array representing the pagination buttons to be displayed.
+   *
+   * This function ensures that a maximum of five page numbers are visible at once.
+   * It includes ellipses ("...") to indicate that there are more pages either
+   * before or after the currently visible range. The first and last page numbers
+   * are always shown if there are more than five pages in total.
+   *
+   * @returns {Array<number | string>} An array of page numbers and ellipses.
+   * - Numbers represent actual page numbers.
+   * - Strings represent ellipses ("...") indicating skipped pages.
+   *
+   * Example output for a total of 10 pages:
+   * - If on page 1: [1, 2, 3, 4, 5, '...', 10]
+   * - If on page 7: [1, '...', 6, 7, 8, 9, 10]
+   */
+  const getPageNumbers = () => {
+    const pageNumbers = [];
+    const maxVisiblePages = 5;
+
+    if (totalPages <= maxVisiblePages) {
+      for (let i = 1; i <= totalPages; i++) {
+        pageNumbers.push(i);
+      }
+    } else {
+      pageNumbers.push(1);
+
+      let startPage, endPage;
+
+      if (currentPage <= 3) {
+        startPage = 2;
+        endPage = 5;
+      } else if (currentPage >= totalPages - 3) {
+        startPage = totalPages - 4;
+        endPage = totalPages;
+      } else {
+        startPage = currentPage - 1;
+        endPage = currentPage + 1;
+      }
+
+      if (startPage > 2) {
+        pageNumbers.push('...');
+      }
+
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbers.push(i);
+      }
+
+      if (endPage < totalPages - 1) {
+        pageNumbers.push('...');
+      }
+
+      if (endPage < totalPages) {
+        pageNumbers.push(totalPages);
+      }
+    }
+
+    return pageNumbers;
+  };
+
   return (
     <nav aria-label="Table pagination" className="table-pagination--nav">
       <ul className="table-pagination--list">
@@ -49,15 +109,19 @@ const Pagination: React.FC<PaginationProps> = ({
             &laquo; Previous
           </button>
         </li>
-        {Array.from({ length: totalPages }, (_, index) => (
-          <li key={index + 1}>
-            <button
-              onClick={() => handlePageChange(index + 1)}
-              aria-label={`Page ${index + 1}`}
-              className={currentPage === index + 1 ? 'active' : ''}
-            >
-              {index + 1}
-            </button>
+        {getPageNumbers().map((page, index) => (
+          <li key={index}>
+            {typeof page === 'number' ? (
+              <button
+                onClick={() => handlePageChange(page)}
+                aria-label={`Page ${page}`}
+                className={currentPage === page ? 'active' : ''}
+              >
+                {page}
+              </button>
+            ) : (
+              <span className="ellipsis">...</span>
+            )}
           </li>
         ))}
         <li>
